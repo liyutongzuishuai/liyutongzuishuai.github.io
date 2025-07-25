@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人网站</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%);
+            color: white;
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+        }
+        header {
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+            animation: slideDown 2s ease-in-out;
+        }
+        nav {
+            margin: 10px 0;
+            animation: fadeIn 2s ease-in-out 1s;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: text-decoration 0.3s ease;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .profile {
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out 2s;
+        }
+        .profile img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            animation: rotate 5s linear infinite;
+        }
+        .profile p {
+            font-size: 1.1em;
+            margin: 20px 0;
+            animation: fadeIn 2s ease-in-out 3s;
+        }
+        section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            animation: slideLeft 1s ease-in-out;
+        }
+        section p {
+            font-size: 1.1em;
+            animation: slideRight 1s ease-in-out;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 10px 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        footer p {
+            font-size: 0.9em;
+            animation: slideUp 1s ease-in-out;
+        }
+        /* 动画定义 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100px); }
+            to { transform: translateY(0); }
+        }
+        @keyframes slideLeft {
+            from { transform: translateX(-100px); }
+            to { transform: translateX(0); }
+        }
+        @keyframes slideRight {
+            from { transform: translateX(100px); }
+            to { transform: translateX(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100px); }
+            to { transform: translateY(0); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>欢迎来到我的个人网站</h1>
+            <p>简洁而不简单的设计</p>
+        </header>
+        <nav>
+            <a href="#about">关于我</a>
+            <a href="#skills">技能</a>
+            <a href="#projects">项目</a>
+            <a href="#contact">联系</a>
+        </nav>
+        <div class="profile">
+            <p>你好，我是ios15-5，一名热爱编程的初中生。</p></div>
+        <section id="about">
+            <h2>关于我</h2>
+            <p>我是一名初中生</p>
+        </section>
+        <section id="skills">
+            <h2>技能</h2>
+            <p>html py c艹 我都会一点但会的不多</p>
+        </section>
+        <section id="projects">
+            <h2>爱好</h2>
+            <p>我喜欢编程,玩机,在ios越狱圈里混迹</p>
+        </section>
+        <section id="contact">
+            <h2>联系</h2>
+            <p>你可以通过电子邮件联系我：lyt202295@outlook.com</p>
+        </section>
+        <footer>
+            <p>版权所有 &copy; 2025 liyutong</p>
+            <a href="https://space.bilibili.com/3537123651095423?spm_id_from=333.1007.0.0">我的哔哩哔哩</a>
+        </footer>
+    </div>
+</body>
+</html>
