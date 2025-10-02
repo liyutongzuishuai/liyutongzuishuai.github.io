@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>李宇桐's blog</title
+<style>
+</head>
+<body>
+<h1 id="简单建站">简单建站</h1>
+<blockquote>
+  <p>全程「我」怎么做，你怎么复制即可。</p>
+</blockquote>
+
+<hr />
+
+<h2>1 装系统环境</h2>
+
+<p>我打开终端，先更新再装 Nginx： <br />
+<code>bash
+sudo apt update &amp;&amp; sudo apt install nginx -y
+sudo systemctl enable --now nginx
+</code>
+浏览器输服务器 IP，看到 <strong>404</strong>不好！！</p>
+
+<hr />
+
+<p>1.运行sudo systemctl start nginx
+   <code>
+   结果终端回我一句： <br />
+</code>
+   Job for nginx.service failed because the control process exited with error code.
+   ```</p>
+
+<ol>
+<li><p>我第一时间看详细日志 <br />
+<code>bash
+journalctl -u nginx.service --no-pager -n 30
+</code>
+里头反复提示： <br />
+<code>
+open() "/var/log/nginx/error.log" failed (2: No such file or directory)
+nginx: configuration file /etc/nginx/nginx.conf test failed
+</code></p></li>
+<li><p>我立刻意识到：<strong>日志目录不存在</strong>，配置测试直接崩。 <br />
+手敲两行把坑填上： <br />
+<code>bash
+sudo mkdir -p /var/log/nginx
+sudo chown www-data:www-data /var/log/nginx
+</code></p></li>
+<li><p>再次启动 <br />
+<code>bash
+sudo systemctl start nginx
+</code>
+状态变成 <code>active (running)</code>，浏览器访问 IP → <strong>Welcome to nginx!</strong> 出现，我这才松口气。</p></li>
+</ol>
+
+<hr />
+
+<p><strong>我小结：</strong> <br />
+Nginx 启动失败 9 成是 <strong>日志目录缺失</strong> 或 <strong>端口 80 被占用</strong>。  </p>
+
+<h3>先看 <code>journalctl</code>，再建目录/改端口/重载配置，<strong>30 秒就能复活</strong>。</h3>
+
+<h2>2 写第一篇博客</h2>
+
+<p>本地新建文件 <code>2025-10-02-hello.md</code>，用 Markdown 写： <br />
+# Hello World - 我的第一帖
+<p>也是成功把Hello Wrold跑出来了</p>
+
+<hr />
+
+<h2>3 一键转成 HTML</h2>
+
+<p>装转换器： <br />
+<code>bash
+sudo apt install markdown -y
+</code>
+同目录执行： <br />
+<code>bash
+markdown 2025-10-02-hello.md &gt; 2025-10-02-hello.html
+</code></p>
+
+<hr />
+
+<h2>4 扔到网站目录</h2>
+
+<p><code>bash
+sudo mkdir -p /var/www/html/posts
+sudo cp 2025-10-02-hello.html /var/www/html/posts/
+</code>
+我顺手用ai写了个主页（可怜的前端工程师） <br />
+</p>
+
+<hr />
+
+<h2>5 重载 &amp; 查看</h2>
+
+<p><code>bash
+sudo nginx -t &amp;&amp; sudo systemctl reload nginx
+</code>
+我刷新浏览器 <code>http://IP/</code> → 首页出现文章链接 → 点进去就是纯 Markdown 生成的静态页。</p>
+
+<hr />
+
+<h2>6 以后每篇都如此</h2>
+
+<p>我写作流程变成： <br />
+<code>
+① nvim new.md → 写内容 <br />
+② markdown new.md &gt; new.html <br />
+③ cp new.html /var/www/html/posts/ <br />
+④ 在 index.html 加一行链接 <br />
+⑤ reload nginx → 发布完成
+</code></p>
+
+<hr />
+
+<p>「Blog 其实就是 Markdown 文件 → HTML → 丢进 Nginx 目录，<strong>写完即发布</strong>，再没别的秘密。」</p>
+</body>
+</html>
