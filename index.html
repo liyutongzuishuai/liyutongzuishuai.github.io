@@ -1,81 +1,1082 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>李宇桐's blog</title>
-<style>
-:root{
-  --bg:#fff; --fg:#333; --accent:#0077cc;
-}
-@media (prefers-color-scheme:dark){
-  :root{ --bg:#1e1e1e; --fg:#ccc; }
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
-header{padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
-nav a{margin-left:1rem;color:var(--accent);text-decoration:none}
-.hero{padding:6rem 2rem;text-align:center;background:var(--accent);color:#fff}
-.hero h1{font-size:2.5rem;margin-bottom:1rem}
-section{padding:3rem 2rem;max-width:900px;margin:auto}
-.timeline li{list-style:none;margin-bottom:1rem;border-left:3px solid var(--accent);padding-left:1rem}
-.cards{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.card{border:1px solid #ccc;border-radius:6px;padding:1.5rem}
-footer{text-align:center;padding:2rem;font-size:.9rem;opacity:.7}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lyt | 初中生开发者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS变量定义 - 浅色主题 */
+        :root {
+            --bg-color: #f5f5f7;
+            --bg-secondary: #fbfbfd;
+            --text-color: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent-color: #06c;
+            --accent-hover: #0077ED;
+            --card-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --footer-bg: #1d1d1f;
+            --footer-text: #f5f5f7;
+            --footer-link: #a1a1a6;
+            --input-bg: #ffffff;
+            --input-border: #d2d2d7;
+            --btn-primary-bg: #0071e3;
+            --btn-primary-text: #ffffff;
+            --btn-secondary-bg: transparent;
+            --btn-secondary-text: #1d1d1f;
+            --btn-secondary-border: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+        
+        /* 深色主题变量 */
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --bg-secondary: #1d1d1f;
+            --text-color: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --accent-color: #2997ff;
+            --accent-hover: #0077ED;
+            --card-bg: #1d1d1f;
+            --header-bg: rgba(29, 29, 31, 0.9);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --footer-bg: #000000;
+            --footer-text: #f5f5f7;
+            --footer-link: #86868b;
+            --input-bg: #2c2c2e;
+            --input-border: #3a3a3c;
+            --btn-primary-bg: #0071e3;
+            --btn-primary-text: #ffffff;
+            --btn-secondary-bg: transparent;
+            --btn-secondary-text: #f5f5f7;
+            --btn-secondary-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--accent-color);
+            transition: color var(--transition-speed);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 主题切换按钮 */
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color var(--transition-speed);
+            margin-left: 15px;
+        }
+        
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        [data-theme="dark"] .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: block;
+        }
+        
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: var(--header-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color var(--transition-speed), border-color var(--transition-speed);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 52px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            transition: color var(--transition-speed);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color var(--transition-speed);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .btn-primary {
+            background-color: var(--btn-primary-bg);
+            color: var(--btn-primary-text);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background-color: var(--btn-secondary-bg);
+            color: var(--btn-secondary-text);
+            border: 2px solid var(--btn-secondary-border);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        [data-theme="dark"] .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        [data-theme="dark"] .tag {
+            background-color: var(--accent-color);
+        }
+        
+        /* 内容区域 */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.015em;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+        
+        /* 关于我区域 */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 技能区域 */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .skill-item {
+            background-color: var(--card-bg);
+            border-radius: 18px;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .skill-item h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .skill-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* 项目区域 */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 25px;
+        }
+        
+        .project-item {
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: var(--card-bg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform var(--transition-speed), background-color var(--transition-speed);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-item:hover {
+            transform: translateY(-8px);
+        }
+        
+        .project-img {
+            height: 200px;
+            background-color: var(--bg-secondary);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: var(--accent-color);
+        }
+        
+        .project-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .project-tags {
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        
+        /* 学习区域 */
+        .learning-section {
+            background-color: var(--bg-secondary);
+            border-radius: 25px;
+            padding: 50px;
+            margin-top: 60px;
+        }
+        
+        .learning-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .learning-text {
+            flex: 1;
+        }
+        
+        .learning-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .learning-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        
+        .learning-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .learning-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .learning-icon {
+            font-size: 8rem;
+            color: var(--accent-color);
+            opacity: 0.8;
+        }
+        
+        /* 联系区域 */
+        .contact-section {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            transition: transform var(--transition-speed), color var(--transition-speed);
+        }
+        
+        .contact-link:hover {
+            transform: translateY(-5px);
+            color: var(--accent-color);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            background-color: var(--bg-secondary);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-text {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 50px 0 25px;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--footer-text);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--footer-link);
+            font-size: 14px;
+            transition: color var(--transition-speed);
+        }
+        
+        .footer-column a:hover {
+            color: var(--footer-text);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--footer-text);
+            font-size: 17px;
+            transition: background-color var(--transition-speed);
+        }
+        
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--footer-link);
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .learning-content {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 35px;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 35px;
+            }
+            
+            .contact-links {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .learning-section {
+                padding: 35px 25px;
+            }
+            
+            .learning-stats {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .contact-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .projects, .skills {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                gap: 15px;
+            }
+            
+            .contact-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .learning-icon {
+                font-size: 6rem;
+            }
+        }
+        
+        /* 间距元素 */
+        .spacer {
+            height: 40px;
+            width: 100%;
+        }
+    </style>
 </head>
-<body>
+<body data-theme="light">
+    <!-- 导航栏 -->
+    <header>
+        <nav>
+            <a href="#" class="logo">lyt<span>.</span></a>
+            
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#contact">联系</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </li>
+            </ul>
+            
+            <div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-<header>
-  <div><strong>lyt</strong></div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#blog">Blog</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <h1>你好，我是lyt</h1>
+        <div class="hero-subtitle">初中生 · 编程爱好者 · Linux用户</div>
+        <p>我是一名初中生，热爱编程和科技。目前正在学习Python和C++，并使用Debian系统探索开源世界。我相信技术能够改变未来，而学习是通往未来的钥匙。</p>
+        <div class="hero-btns">
+            <a href="#projects" class="btn btn-primary">查看我的项目</a>
+            <a href="#contact" class="btn btn-secondary">联系我</a>
+        </div>
+        <div style="margin-top: 30px;">
+            <span class="tag">Python</span>
+            <span class="tag">C++</span>
+            <span class="tag">Debian</span>
+            <span class="tag">Linux</span>
+            <span class="tag">初中生</span>
+        </div>
+    </section>
 
-<section id="home" class="hero">
-  <h1>Hi, I'm lyt</h1>
-  <p>一名爱编程的初中生</p>
-</section>
+    <!-- 关于我区域 -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <p class="section-subtitle">一名热爱技术的初中生，探索编程世界的冒险者</p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>探索代码世界的新手</h3>
+                    <p>我叫lyt，是一名初中生。与许多同龄人不同，我的课余时间大多花在了编程和计算机技术上。从第一次在屏幕上输出"Hello, World!"开始，我就被编程的魅力深深吸引。</p>
+                    <p>目前我主要学习Python和C++两种编程语言。Python的简洁优雅让我能够快速实现想法，而C++的性能和控制力则让我着迷于系统级编程的可能性。</p>
+                    <p>我使用Debian作为我的主要操作系统，这让我有机会深入了解Linux系统的运作方式，也让我接触到了开源文化的精髓。</p>
+                    <p>在学校，我是信息技术课的代表，经常帮助同学解决电脑问题。我也参加了学校的编程社团，和志同道合的朋友们一起探索技术的边界。</p>
+                    <a href="#contact" class="btn btn-primary">和我交流</a>
+                </div>
+                <div class="about-image">
+                    <!-- 这里可以使用实际图片，暂时用编程相关的占位图 -->
+                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="编程学习">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="about">
-  <h2>About</h2>
-  <p>坐标山东，喜欢ai,python3,linux是一位debian爱好者</p>
+    <!-- 技能区域 -->
+    <section class="section" id="skills" style="background-color: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="section-title">我的技能</h2>
+            <p class="section-subtitle">正在学习和掌握的技术栈</p>
+            
+            <div class="skills">
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3>Python 编程</h3>
+                    <p>掌握Python基础语法、函数，能够使用Python解决实际问题，如装13小脚本</p>
+                    <div class="project-tags">
+                        <span class="tag" style="background-color: #3776ab; font-size: 0.8rem;">不会</span>
+                        <span class="tag" style="background-color: #3776ab; font-size: 0.8rem;">不会</span>
+                        <span class="tag" style="background-color: #3776ab; font-size: 0.8rem;">啥也不会</span>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-copyright"></i>
+                    </div>
+                    <h3>C++ 编程</h3>
+                    <p>学习C++基础语法、指针、内存管理等概念，理解面向对象编程思想，能够编写简单的控制台应用程序。</p>
+                    <div class="project-tags">
+                        <span class="tag" style="background-color: #00599c; font-size: 0.8rem;">语法基础</span>
+                        <span class="tag" style="background-color: #00599c; font-size: 0.8rem;">不会</span>
+                        <span class="tag" style="background-color: #00599c; font-size: 0.8rem;">不会</span>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h3>Linux/Debian</h3>
+                    <p>熟练使用Debian系统，掌握基本命令行操作、软件包管理、文件权限管理等，能够配置开发环境。</p>
+                    <div class="project-tags">
+                        <span class="tag" style="background-color: #d70a53; font-size: 0.8rem;">终端命令</span>
+                        <span class="tag" style="background-color: #d70a53; font-size: 0.8rem;">apt</span>
+                        <span class="tag" style="background-color: #d70a53; font-size: 0.8rem;">文件系统</span>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>学习能力</h3>
+                    <p>作为初中生，我拥有快速学习新技术的能力，能够通过文档、教程和在线资源自学编程知识，并应用于实践中。</p>
+                    <div class="project-tags">
+                        <span class="tag" style="background-color: #4CAF50; font-size: 0.8rem;">自主学习</span>
+                        <span class="tag" style="background-color: #4CAF50; font-size: 0.8rem;">问题解决</span>
+                        <span class="tag" style="background-color: #4CAF50; font-size: 0.8rem;">实践能力</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <h3>Skills</h3>
-  <ul class="timeline">
-	  <li><strong>2025</strong>建立了这个网站</li>
+    <!-- 项目区域 -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title">我的项目</h2>
+            <p class="section-subtitle">在学习过程中完成的一些小项目</p>
+            
+            <div class="projects">
+                <div class="project-item">
+                    <div class="project-img">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Linux脚本集合</h3>
+                        <p>从yazi文件管理器再到ohmyfish,还提交了一个人生中的第一个议题</p>
+                        <div class="project-tags">
+                            <span class="tag">fish</span>
+                            <span class="tag">Linux</span>
+                            <span class="tag">写着玩</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 学习历程区域 -->
+            <div class="learning-section">
+                <div class="learning-content">
+                    <div class="learning-text">
+                        <h3>我的学习历程</h3>
+                        <p>作为一名初中生，我的编程学习之路从好奇开始。从最初的scratch，到python and cpp 再到debian每一步都是探索和成长。</p>
+                        <p>我每周末会花1-2小时学习编程</p>
+                        <div class="learning-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">2+</div>
+                                <div class="stat-label">编程语言</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">2</div>
+                                <div class="stat-label">完成项目</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">3年+</div>
+                                <div class="stat-label">学习时间</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="learning-image">
+                        <div class="learning-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  </ul>
-</section>
+    <!-- 联系区域 -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我</h2>
+            <p class="section-subtitle">如果你也对编程感兴趣，或者有好的学习建议，欢迎联系我！</p>
+        </div>
+    </section>
 
-<section id="blog">
-  <h2>Recent Posts</h2>
-  <div class="cards">
-    <div class="card">
-      <h3><a href="posts/mypage.html">Hello World</a></h3>
-      <small>2025-10-02</small>
-      <p>搭建这个极简个人主页的全过程。</p>
-    </div>
-    </div>
-  </div>
-</section>
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">lyt<span>.</span></div>
+                    <p style="color: var(--footer-link); max-width: 300px;">初中生编程爱好者，探索Python、C++和Linux的世界。学习永无止境，代码改变未来。</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="知乎"><i class="fab fa-zhihu"></i></a>
+                        <a href="#" aria-label="邮箱"><i class="fas fa-envelope"></i></a>
+                        <a href="#" aria-label="B站"><i class="fab fa-bilibili"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>快速链接</h4>
+                        <ul>
+                            <li><a href="#home">首页</a></li>
+                            <li><a href="#about">关于我</a></li>
+                            <li><a href="#skills">技能</a></li>
+                            <li><a href="#projects">项目</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>技术栈</h4>
+                        <ul>
+                            <li><a href="#">Python</a></li>
+                            <li><a href="#">C++</a></li>
+                            <li><a href="#">Linux</a></li>
+                            <li><a href="#">Debian</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>联系</h4>
+                        <ul>
+                            <li><a href="mailto:lyt.student@example.com">lyt.student@example.com</a></li>
+                            <li>中国 · 初中生</li>
+                            <li>学习交流 · 技术分享</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 lyt. 初中生个人网站 | 保留所有权利.</p>
+                <p style="font-size: 0.85rem; margin-top: 5px;">Powered by curiosity and passion for coding</p>
+            </div>
+        </div>
+    </footer>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>
-    <a href="lyt202295@outlook.com">Email</a> |
-    <a href="lytzuishuai.github.io" target="_blank">GitHub</a>  </p>
-</section>
-
-<footer>
-  © 2025 lyt · Built with ❤ and AI 
-</footer>
-
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        
+        // 更新按钮图标
+        function updateThemeIcon() {
+            const isDark = htmlElement.getAttribute('data-theme') === 'dark';
+            themeToggle.setAttribute('aria-label', isDark ? '切换到浅色模式' : '切换到深色模式');
+        }
+        
+        updateThemeIcon();
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
+        });
+        
+        // 移动端菜单切换
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 60,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 移动端点击后关闭菜单
+                    if(window.innerWidth <= 768) {
+                        document.querySelector('.nav-links').style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        // 响应式菜单调整
+        window.addEventListener('resize', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if(window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+        
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            if(window.innerWidth <= 768) {
+                document.querySelector('.nav-links').style.display = 'none';
+            }
+        });
+        
+        // 检测系统主题偏好
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // 如果用户没有设置过主题偏好，则使用系统设置
+        if (!localStorage.getItem('theme')) {
+            if (prefersDarkScheme.matches) {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                updateThemeIcon();
+            }
+        }
+        
+        // 监听系统主题变化
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                htmlElement.setAttribute('data-theme', newTheme);
+                updateThemeIcon();
+            }
+        });
+        
+        // 添加一些交互效果
+        document.querySelectorAll('.skill-item, .project-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+        });
+    </script>
 </body>
 </html>
-
-//ai编写
